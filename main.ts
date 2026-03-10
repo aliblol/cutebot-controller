@@ -18,21 +18,15 @@ let right = "right"
 let backward = "backward"
 let stop = "stop"
 basic.forever(function () {
-    let pitchValue = 0
     if (input.buttonIsPressed(Button.A) && input.buttonIsPressed(Button.B)) {
         goDirection(forward)
-        basic.showArrow(ArrowNames.North)
     } else if (input.buttonIsPressed(Button.A)) {
         goDirection(left)
-        basic.showArrow(ArrowNames.West)
     } else if (input.buttonIsPressed(Button.B)) {
         goDirection(right)
-        basic.showArrow(ArrowNames.East)
-    } else if (pitchValue > 60) {
+    } else if (input.rotation(Rotation.Pitch) > 60) {
         goDirection(backward)
-        basic.showArrow(ArrowNames.South)
     } else {
         goDirection(stop)
-        basic.showIcon(IconNames.SmallSquare)
     }
 })
