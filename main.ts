@@ -1,45 +1,38 @@
+function goDirection (direction: string) {
+    radio.sendString(direction)
+    serial.writeLine("Sent: " + direction)
+}
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
-    radio.sendString(RainbowLights)
-    basic.showString("R")
-    serial.writeLine("Sent: RainbowLights")
+    goDirection(RainbowLights)
 })
-let pitchValue = 0
 let RainbowLights = ""
 let currentGroup = 0
 radio.setGroup(currentGroup)
 basic.showString("" + (currentGroup))
 basic.pause(500)
 basic.clearScreen()
-let Pitch = "Pitch"
 RainbowLights = "RainbowLights"
-// Direction variables
 let forward = "forward"
 let left = "left"
 let right = "right"
 let backward = "backward"
 let stop = "stop"
-// Send pitch value
 basic.forever(function () {
-    pitchValue = input.rotation(Rotation.Pitch)
-    radio.sendValue(Pitch, pitchValue)
-    serial.writeLine("Sent: Pitch " + pitchValue)
-})
-// Send button press state and control logic
-basic.forever(function () {
+    let pitchValue = 0
     if (input.buttonIsPressed(Button.A) && input.buttonIsPressed(Button.B)) {
-        radio.sendString(forward)
-        serial.writeLine("Sent: " + forward)
+        goDirection(forward)
+        basic.showArrow(ArrowNames.North)
     } else if (input.buttonIsPressed(Button.A)) {
-        radio.sendString(left)
-        serial.writeLine("Sent: " + left)
+        goDirection(left)
+        basic.showArrow(ArrowNames.West)
     } else if (input.buttonIsPressed(Button.B)) {
-        radio.sendString(right)
-        serial.writeLine("Sent: " + right)
+        goDirection(right)
+        basic.showArrow(ArrowNames.East)
     } else if (pitchValue > 60) {
-        radio.sendString(backward)
-        serial.writeLine("Sent: " + backward)
+        goDirection(backward)
+        basic.showArrow(ArrowNames.South)
     } else {
-        radio.sendString(stop)
-        serial.writeLine("Sent: " + stop)
+        goDirection(stop)
+        basic.showIcon(IconNames.SmallSquare)
     }
 })
